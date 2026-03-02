@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET_IP="192.168.8.1"
+TARGET_IP="127.0.0.1"
 TARGET_PORT=9090
 
 echo "--- Starting Traffic Test ---"
