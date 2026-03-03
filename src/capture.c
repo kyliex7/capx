@@ -1,5 +1,6 @@
 #include "capture.h"
 #include "parse_args.h"
+#include "utils.h"
 
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
@@ -30,10 +31,7 @@ int main(int argc, char *argv[])
 {
     // TODO: add -h
     if (argc < 2) {
-        fprintf(stderr,
-                "usage: %s -i interface -f bpf_filter -o pcap_output_file\n",
-                argv[0]);
-        return -1;
+        usage(argv[0]);
     }
 
     args_t args = parse_args(argc, argv);
@@ -81,7 +79,8 @@ int main(int argc, char *argv[])
                                .link_hdr_len = get_link_hdr_len(datalink_type),
                                .dumpfile = g_dumper};
 
-    int ret = pcap_loop(g_capdev, 0, loop_callback, (u_char *)&cb_data);
+    int ret =
+        pcap_loop(g_capdev, args.count, loop_callback, (u_char *)&cb_data);
     if (ret == PCAP_ERROR) {
         fprintf(stderr, "ERROR: pcap_loop: %s\n", pcap_geterr(g_capdev));
         return -1;
@@ -120,10 +119,10 @@ void loop_callback(u_char *user, const struct pcap_pkthdr *header,
     strcpy(pkt_srcip, inet_ntoa(iphdr->ip_src));
     strcpy(pkt_dstip, inet_ntoa(iphdr->ip_dst));
 
-    int pkt_id = ntohs(iphdr->ip_id),   // identification
-        pkt_tos = iphdr->ip_tos,        // type of service
+    int pkt_id = ntohs(iphdr->ip_id), // identification
+        pkt_tos = iphdr->ip_tos,      // type of service
         // pkt_len = ntohs(iphdr->ip_len), // total length
-        pkt_hlen = iphdr->ip_hl;        // header length
+        pkt_hlen = iphdr->ip_hl; // header length
 
     pktdptr += (4 * pkt_hlen);
     int proto_type = iphdr->ip_p;

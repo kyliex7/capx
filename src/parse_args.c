@@ -10,7 +10,7 @@ args_t parse_args(int argc, char **argv)
     args_t args;
     opterr = 0;
 
-    while ((opt = getopt(argc, argv, "i:o:f:")) != -1) {
+    while ((opt = getopt(argc, argv, "i:o:f:n:")) != -1) {
         switch (opt) {
         case 'o':
             if (optarg) {
@@ -32,6 +32,14 @@ args_t parse_args(int argc, char **argv)
                 args.fltstr[FLSTRSZ - 1] = '\0';
             }
             break;
+        case 'n': {
+            if (optarg) {
+                args.count = atoi(optarg);
+            } else {
+                args.count = 0;
+            }
+            break;
+        }
         case '?':
             fprintf(stderr, "ERROR: invalid option: -%c\n", optopt);
             exit(-1);

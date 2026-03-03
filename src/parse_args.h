@@ -7,6 +7,7 @@ typedef struct args {
     char fltstr[FLSTRSZ];
     char outfile[OFSZ];
     char ifname[IFSZ];
+	int count;
 } args_t;
 
 args_t parse_args(int argc, char **argv);
