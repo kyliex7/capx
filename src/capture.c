@@ -1,3 +1,7 @@
+/*
+ * DO WHAT THE FUCK YOU WANT WITH THIS
+ * BET YOU WON'T
+ */
 #include "capture.h"
 #include "parse_args.h"
 #include "utils.h"
