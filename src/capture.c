@@ -1,6 +1,5 @@
 /*
  * DO WHAT THE FUCK YOU WANT WITH THIS
- * BET YOU WON'T
  */
 #include "capture.h"
 #include "parse_args.h"
@@ -33,11 +32,11 @@ void sigint_handler(int sig)
 
 int main(int argc, char *argv[])
 {
-    // TODO: add -h
     if (argc < 2) {
         usage(argv[0]);
     }
 
+	// TODO: add functionality to user to select the interface interactively, if no interface is provided.
     args_t args = parse_args(argc, argv);
     struct bpf_program fp;
     char *dev = args.ifname;
@@ -176,19 +175,14 @@ int get_link_hdr_len(int datalink_type)
     switch (datalink_type) {
     case DLT_EN10MB: // ethernet
         return 14;
-
     case DLT_NULL: // loopback (bsd & macos)
         return 4;
-
     case DLT_RAW: // raw ip
         return 0;
-
     case DLT_LINUX_SLL: // linux cooked capture
         return 16;
-
     case DLT_LINUX_SLL2: // linux cooked v2
         return 20;
-
     default:
         return 0; // unknown
     }

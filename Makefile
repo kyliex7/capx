@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
 LIBS = -lpcap
-SOURCES = src/capture.c src/parse_args.c
+SOURCES = src/capture.c src/parse_args.c src/utils.c
 OBJECTS = $(SOURCES:.c=.o)
 TARGET = bin/capture
 
